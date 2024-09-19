@@ -7,8 +7,12 @@ module.exports = (sequelize, Sequelize) => {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            role: {
-                type: DataTypes.ENUM('admin', 'user'),
+            tai_khoan: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            vai_tro: {
+                type: DataTypes.ENUM('admin', 'member', 'leader'),
                 allowNull: false,
             },
             mat_khau: {

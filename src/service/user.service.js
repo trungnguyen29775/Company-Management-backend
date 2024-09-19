@@ -6,24 +6,19 @@ const Users = db.Users;
 
 exports.create = async (req, res) => {
     try {
-        const { name, username, password, phoneNummber, dob, role } = req.body;
-        if (!name || !username || !password) {
-            return res.status(400).send('Name, username, and password are required.');
-        }
-
         const newUserId = uuidv4();
         const newUser = {
             user_id: newUserId,
-            name,
-            username,
-            password,
-            phoneNummber,
-            dob,
-            role,
+            ten: req.body.name,
+            tai_khoan: req.body.username,
+            mat_khau: req.body.password,
+            avtFilePath: null,
+            dob: req.body.dob,
+            vai_tro: req.body.role,
+            gia_tri_tich_luy: 0,
         };
         await Users.create(newUser);
-        console.log('user: ', newUserId);
-        res.status(200).send('User created successfully!');
+        res.status(200).send(req.body);
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Internal Server Error');
