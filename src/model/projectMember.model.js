@@ -1,17 +1,17 @@
 const { DataTypes, DATE } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-    const DoiTac = sequelize.define(
-        'doi_tac',
+    const ProjectMember = sequelize.define(
+        'project_member',
         {
             id: {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            email: {
-                type: DataTypes.STRING,
+            role: {
+                type: DataTypes.ENUM('main_member', 'support', 'sale', 'leader'),
                 allowNull: false,
             },
-            so_dien_thoai: {
+            salaryStatus: {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
@@ -20,5 +20,5 @@ module.exports = (sequelize, Sequelize) => {
             timestamps: true,
         },
     );
-    return DoiTac;
+    return ProjectMember;
 };

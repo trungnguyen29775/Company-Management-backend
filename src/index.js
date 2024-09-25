@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 // db.sequelize.sync({ alter: true });
 
 require('./controller/users.controller')(app);
+require('./controller/project.controller')(app);
 
 httpServer.listen(port, () => {
     console.log('Listen on port ', port);

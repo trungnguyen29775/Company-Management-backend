@@ -7,15 +7,15 @@ module.exports = (sequelize, Sequelize) => {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            tai_khoan: {
+            username: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            vai_tro: {
+            role: {
                 type: DataTypes.ENUM('admin', 'member', 'leader'),
                 allowNull: false,
             },
-            mat_khau: {
+            password: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
-            ten: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
-            gia_tri_tich_luy: {
+            accumulated_value: {
                 type: DataTypes.FLOAT,
                 allowNull: false,
             },

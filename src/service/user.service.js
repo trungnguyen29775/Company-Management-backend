@@ -9,13 +9,13 @@ exports.create = async (req, res) => {
         const newUserId = uuidv4();
         const newUser = {
             user_id: newUserId,
-            ten: req.body.name,
-            tai_khoan: req.body.username,
-            mat_khau: req.body.password,
+            name: req.body.name,
+            username: req.body.username,
+            password: req.body.password,
             avtFilePath: null,
             dob: req.body.dob,
-            vai_tro: req.body.role,
-            gia_tri_tich_luy: 0,
+            role: req.body.role,
+            accumulated_value: 0,
         };
         await Users.create(newUser);
         res.status(200).send(req.body);
@@ -35,9 +35,18 @@ exports.authenticate = async (req, res) => {
             const userData = result.dataValues;
 
             if (userData.password === req.body.password) {
+                const responseData = {
+                    userId: userData.user_id,
+                    name: userData.name,
+                    role: userData.role,
+                    dob: userData.dob,
+                    accumulatedValue: userData.accumulatedValue,
+                    avtFilePath: userData.avtFilePath,
+                    username: userData.username,
+                };
                 res.status(200).json({
                     message: 'Authentication successful',
-                    userData: userData,
+                    userData: responseData,
                 });
             } else {
                 res.status(401).json({
@@ -54,20 +63,38 @@ exports.authenticate = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
-    Users.findAll({
-        where: {
-            username: {
-                [Op.not]: req.body.currentUsername,
+    if (req.body.username === 'admin') {
+        Users.findAll({
+            where: {
+                username: {
+                    [Op.not]: req.body.username,
+                },
             },
-        },
-    })
-        .then((result) => {
-            // const userData = result;
-            res.status(200).send(result);
         })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || 'Some error occurred while retrieving User.',
+            .then((result) => {
+                const responseData = [];
+                result.map((item, index) => {
+                    const date = new Date(item.dob);
+                    const formatData = {
+                        stt: index + 1,
+                        name: item.name,
+                        username: item.username,
+                        role: item.role,
+                        avtFilePath: item.avt_file_path,
+                        valueProposition: item.accumulated_value,
+                        dob: date.toISOString().split('T')[0],
+                    };
+                    responseData.push(formatData);
+                });
+                res.status(200).send(responseData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).send({
+                    message: err.message || 'Some error occurred while retrieving User.',
+                });
             });
-        });
+    } else {
+        res.status(200).send('Not admin');
+    }
 };

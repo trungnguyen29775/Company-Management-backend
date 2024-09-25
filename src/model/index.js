@@ -9,11 +9,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.Users = require('./users.model')(sequelize, Sequelize);
-db.DichVu = require('./dichVu.model')(sequelize, Sequelize);
-db.DoiTac = require('./doiTac.model')(sequelize, Sequelize);
-db.HopDong = require('./hopDong.model')(sequelize, Sequelize);
-db.NhanVien = require('./nhanVienDuAn.model')(sequelize, Sequelize);
-db.DuAn = require('./duAn.model')(sequelize, Sequelize);
+db.Service = require('./service.model')(sequelize, Sequelize);
+db.DoiTac = require('./businessPartner.model')(sequelize, Sequelize);
+db.HopDong = require('./contract.model')(sequelize, Sequelize);
+db.NhanVien = require('./projectMember.model')(sequelize, Sequelize);
+db.Project = require('./project.model')(sequelize, Sequelize);
 // --------------------------------Relation----------------------------
 // Nhan vien
 db.NhanVien.belongsTo(db.Users, {
@@ -25,38 +25,38 @@ db.Users.hasMany(db.NhanVien, {
 });
 // Du An
 
-db.NhanVien.belongsTo(db.DuAn, {
-    foreignKey: 'id_du_an',
+db.NhanVien.belongsTo(db.Project, {
+    foreignKey: 'id_project',
 });
 
-db.DuAn.hasMany(db.NhanVien, {
-    foreignKey: 'id_du_an',
+db.Project.hasMany(db.NhanVien, {
+    foreignKey: 'id_project',
 });
 
 // Doi tac
-db.DuAn.belongsTo(db.DoiTac, {
-    foreignKey: 'id_doi_tac',
+db.Project.belongsTo(db.DoiTac, {
+    foreignKey: 'id_business_partner',
 });
 
-db.DoiTac.hasMany(db.DuAn, {
-    foreignKey: 'id_doi_tac',
+db.DoiTac.hasMany(db.Project, {
+    foreignKey: 'id_business_partner',
 });
 // hop dong
-db.HopDong.belongsTo(db.DuAn, {
-    foreignKey: 'id_du_an',
+db.HopDong.belongsTo(db.Project, {
+    foreignKey: 'id_project',
 });
 
-db.DuAn.hasMany(db.HopDong, {
-    foreignKey: 'id_du_an',
+db.Project.hasMany(db.HopDong, {
+    foreignKey: 'id_project',
 });
 
 // dich vu
-db.DichVu.belongsTo(db.DuAn, {
-    foreignKey: 'id_du_an',
+db.Service.belongsTo(db.Project, {
+    foreignKey: 'id_project',
 });
 
-db.DuAn.hasMany(db.DichVu, {
-    foreignKey: 'id_du_an',
+db.Project.hasMany(db.Service, {
+    foreignKey: 'id_project',
 });
 
 module.exports = db;

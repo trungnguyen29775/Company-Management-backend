@@ -1,25 +1,25 @@
 const { DataTypes, DATE } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-    const HopDong = sequelize.define(
-        'hop_dong',
+    const Contract = sequelize.define(
+        'contract',
         {
             id: {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            so_hd: {
+            code: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            phan_tram_khau_tru: {
+            deduction_percentage: {
                 type: DataTypes.FLOAT,
                 allowNull: false,
             },
-            trang_thai: {
+            status: {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
-            ngay_thanh_toan: {
+            payment_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
             },
@@ -28,5 +28,5 @@ module.exports = (sequelize, Sequelize) => {
             timestamps: true,
         },
     );
-    return HopDong;
+    return Contract;
 };

@@ -1,28 +1,24 @@
 const { DataTypes, DATE } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-    const DichVu = sequelize.define(
-        'dich_vu',
+    const BusinessPartner = sequelize.define(
+        'business_partner',
         {
             id: {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            ten_dich_vu: {
+            email: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            so_tien: {
-                type: DataTypes.DECIMAL,
-                allowNull: false,
-            },
-            noi_dung: {
+            phone: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: true,
             },
         },
         {
             timestamps: true,
         },
     );
-    return DichVu;
+    return BusinessPartner;
 };

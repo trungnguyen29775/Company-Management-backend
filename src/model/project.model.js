@@ -1,37 +1,33 @@
 const { DataTypes, DATE } = require('sequelize');
 module.exports = (sequelize, Sequelize) => {
-    const DuAn = sequelize.define(
-        'du_an',
+    const Project = sequelize.define(
+        'project',
         {
             id: {
                 type: DataTypes.STRING,
                 primaryKey: true,
             },
-            ten_du_an: {
+            name: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            noi_dung_du_an: {
+            content: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            goi: {
+            package: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            tong_tien: {
+            totalCost: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
-            den_ngay: {
+            until: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            so_tien_con_lai: {
-                type: DataTypes.FLOAT,
-                allowNull: false,
-            },
-            trang_thai_du_an: {
+            status: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
@@ -40,5 +36,5 @@ module.exports = (sequelize, Sequelize) => {
             timestamps: true,
         },
     );
-    return DuAn;
+    return Project;
 };
