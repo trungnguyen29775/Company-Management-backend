@@ -1,5 +1,5 @@
 const db = require('../model');
-const { Op } = require('sequelize');
+const { Op, where } = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
 
 const Users = db.Users;
@@ -96,5 +96,48 @@ exports.getAll = async (req, res) => {
             });
     } else {
         res.status(200).send('Not admin');
+    }
+};
+
+exports.create = async (req, res) => {
+    try {
+        const newUserId = uuidv4();
+        const newUser = {
+            user_id: newUserId,
+            name: req.body.name,
+            username: req.body.username,
+            password: req.body.password,
+            avtFilePath: null,
+            dob: req.body.dob,
+            role: req.body.role,
+            accumulated_value: 0,
+        };
+        await Users.create(newUser);
+        res.status(200).send(req.body);
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+exports.update = async (req, res) => {
+    try {
+        Users.update(
+            {
+                name: req.body.name,
+                dob: req.body.dob,
+                password: req.body.password,
+                role: req.body.role,
+            },
+            {
+                where: {
+                    username: req.body.username,
+                },
+            },
+        ).then((result) => {
+            res.status(200).send('Update Complete');
+        });
+    } catch (err) {
+        res.status(500).send('Error due to ', err);
     }
 };
